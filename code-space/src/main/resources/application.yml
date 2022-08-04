@@ -1,0 +1,10 @@
+#spring:
+#  datasource:
+#    driver-class-name: com.mysql.cj.jdbc.Driver
+#    url: jdbc:mysql://120.26.211.99:3306/ncpr?useUnicode=true&characterEncoding=utf-8
+#    username: root
+#    password: Fhl0009252937#
+#  mvc:
+#    hiddenmethod:
+#      filter:
+#        enabled: true
