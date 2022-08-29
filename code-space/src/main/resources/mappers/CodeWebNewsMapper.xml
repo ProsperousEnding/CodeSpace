@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.code.codespace.dao.CodeWebNewsMapper">
+
+    <sql id="NewsColumn">
+        <!--
+          WARNING - @mbg.generated
+        -->
+        news_id,news_title,news_type_id,news_url,news_likes
+    </sql>
+
+    <!--    保存新闻列表信息-->
+    <insert id="saveNewsList" parameterType="java.util.List">
+        insert into code_web_news(<include refid="NewsColumn"/>)values
+        <foreach collection="list" item="item" index="index" separator=",">
+            ( #{item.newsId},#{item.newsTitle},#{item.newsTypeId},#{item.newsUrl},#{item.newsLikes})
+        </foreach>
+    </insert>
+
+    <!--    清空新闻列表（物理）-->
+    <delete id="deleteNewsTable">
+        TRUNCATE TABLE code_web_news;
+    </delete>
+
+    <!--    获取新闻列表-->
+    <select id="getNewsList" resultType="com.code.codespace.pojo.po.CodeWebNews">
+        select
+        <include refid="NewsColumn"/>
+        from code_web_news
+        where del_tag='0'
+        order by news_type_id;
+    </select>
+</mapper>
