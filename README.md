@@ -1,5 +1,5 @@
 
-# :earth_americas: CodeSpace
+# :globe_with_meridians: CodeSpace
 
 > A comprehensive code programming guide for developers 
 
@@ -20,13 +20,12 @@
 <br />
 
 ## 🛠 Skills
-### font:
+### :dolphin:font:
 * vue3
 * naive-ui
 * vue-router
 * axios
-<br />
-### back
+### :four_leaf_clover:back
 * SpringBoot2
 * mybatis-plus
 * swagger2
