@@ -25,9 +25,7 @@
 * naive-ui
 * vue-router
 * axios
-
 <br />
-
 ### back
 * SpringBoot2
 * mybatis-plus
