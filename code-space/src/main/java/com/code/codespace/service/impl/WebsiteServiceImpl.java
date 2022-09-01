@@ -77,6 +77,16 @@ public class WebsiteServiceImpl implements IWebsiteService {
     }
 
     /**
+     * 通过网址类型获取网址
+     * @param type 网址类型
+     * @return
+     */
+    @Override
+    public List<Website> getWebsiteByType(String type) {
+        return websiteMapper.getWebsiteByType(type);
+    }
+
+    /**
      * 获取所有网址类型
      *
      * @return

@@ -1,131 +1,146 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.code.codespace.dao.WebsiteMapper">
-  <resultMap id="BaseResultMap" type="com.code.codespace.pojo.po.Website">
-    <id column="website_id" jdbcType="VARCHAR" property="id" />
-    <result column="website_url" jdbcType="VARCHAR" property="url" />
-    <result column="website_title" jdbcType="VARCHAR" property="title" />
-    <result column="website_describe" jdbcType="VARCHAR" property="describe" />
-    <result column="website_click" jdbcType="VARCHAR" property="click" />
-    <result column="website_cover" jdbcType="VARCHAR" property="cover" />
-    <result column="website_type" jdbcType="VARCHAR" property="type" />
-    <result column="website_create_time" jdbcType="TIMESTAMP" property="createTime" />
-    <result column="website_update_time" jdbcType="TIMESTAMP" property="updateTime" />
-    <result column="website_del_tag" jdbcType="CHAR" property="delTag" />
-  </resultMap>
-  <sql id="Base_Column_List">
-    website.id as website_id, website.url as website_url, website.title as website_title, 
+    <resultMap id="BaseResultMap" type="com.code.codespace.pojo.po.Website">
+        <id column="website_id" jdbcType="VARCHAR" property="id"/>
+        <result column="website_url" jdbcType="VARCHAR" property="url"/>
+        <result column="website_title" jdbcType="VARCHAR" property="title"/>
+        <result column="website_describe" jdbcType="VARCHAR" property="describe"/>
+        <result column="website_click" jdbcType="VARCHAR" property="click"/>
+        <result column="website_cover" jdbcType="VARCHAR" property="cover"/>
+        <result column="website_type" jdbcType="VARCHAR" property="type"/>
+        <result column="website_create_time" jdbcType="TIMESTAMP" property="createTime"/>
+        <result column="website_update_time" jdbcType="TIMESTAMP" property="updateTime"/>
+        <result column="website_del_tag" jdbcType="CHAR" property="delTag"/>
+    </resultMap>
+    <sql id="Base_Column_List">
+        website
+        .
+        id
+        as website_id, website.url as website_url, website.title as website_title,
     website.`describe` as `website_describe`, website.click as website_click, website.cover as website_cover, 
     website.`type` as `website_type`, website.create_time as website_create_time, website.update_time as website_update_time, 
     website.del_tag as website_del_tag
-  </sql>
-  <select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="BaseResultMap">
-    select 
-    <include refid="Base_Column_List" />
-    from website website
-    where website.id = #{id,jdbcType=VARCHAR}
-  </select>
+    </sql>
+    <select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from website website
+        where website.id = #{id,jdbcType=VARCHAR}
+    </select>
 
-  <insert id="insertSelective" keyColumn="id" keyProperty="id" parameterType="com.code.codespace.pojo.po.Website" useGeneratedKeys="true">
-    insert into website
-    <trim prefix="(" suffix=")" suffixOverrides=",">
-        id,
-      <if test="url != null">
-        url,
-      </if>
-      <if test="title != null">
-        title,
-      </if>
-      <if test="describe != null">
-        `describe`,
-      </if>
-      <if test="click != null">
-        click,
-      </if>
-      <if test="cover != null">
-        cover,
-      </if>
-      <if test="type != null">
-        `type`,
-      </if>
-      <if test="createTime != null">
-        create_time,
-      </if>
-      <if test="updateTime != null">
-        update_time,
-      </if>
-      <if test="delTag != null">
-        del_tag,
-      </if>
-    </trim>
-    <trim prefix="values (" suffix=")" suffixOverrides=",">
-        #{id,jdbcType=VARCHAR},
-      <if test="url != null">
-        #{url,jdbcType=VARCHAR},
-      </if>
-      <if test="title != null">
-        #{title,jdbcType=VARCHAR},
-      </if>
-      <if test="describe != null">
-        #{describe,jdbcType=VARCHAR},
-      </if>
-      <if test="click != null">
-        #{click,jdbcType=VARCHAR},
-      </if>
-      <if test="cover != null">
-        #{cover,jdbcType=VARCHAR},
-      </if>
-      <if test="type != null">
-        #{type,jdbcType=VARCHAR},
-      </if>
-      <if test="createTime != null">
-        #{createTime,jdbcType=TIMESTAMP},
-      </if>
-      <if test="updateTime != null">
-        #{updateTime,jdbcType=TIMESTAMP},
-      </if>
-      <if test="delTag != null">
-        #{delTag,jdbcType=CHAR},
-      </if>
-    </trim>
-  </insert>
-  <update id="updateByPrimaryKeySelective" parameterType="com.code.codespace.pojo.po.Website">
-    update website
-    <set>
-      <if test="url != null">
-        url = #{url,jdbcType=VARCHAR},
-      </if>
-      <if test="title != null">
-        title = #{title,jdbcType=VARCHAR},
-      </if>
-      <if test="describe != null">
-        `describe` = #{describe,jdbcType=VARCHAR},
-      </if>
-      <if test="click != null">
-        click = #{click,jdbcType=VARCHAR},
-      </if>
-      <if test="cover != null">
-        cover = #{cover,jdbcType=VARCHAR},
-      </if>
-      <if test="type != null">
-        `type` = #{type,jdbcType=VARCHAR},
-      </if>
-      <if test="createTime != null">
-        create_time = #{createTime,jdbcType=TIMESTAMP},
-      </if>
-      <if test="updateTime != null">
-        update_time = #{updateTime,jdbcType=TIMESTAMP},
-      </if>
-      <if test="delTag != null">
-        del_tag = #{delTag,jdbcType=CHAR},
-      </if>
-    </set>
-    where id = #{id,jdbcType=VARCHAR}
-  </update>
-<!--  查询数据库中是否存在相应的url-->
-  <select id="queryUrl" resultType="java.lang.Integer">
-    select count(1) from website where url=#{url}
-  </select>
+    <insert id="insertSelective" keyColumn="id" keyProperty="id" parameterType="com.code.codespace.pojo.po.Website"
+            useGeneratedKeys="true">
+        insert into website
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            id,
+            <if test="url != null">
+                url,
+            </if>
+            <if test="title != null">
+                title,
+            </if>
+            <if test="describe != null">
+                `describe`,
+            </if>
+            <if test="click != null">
+                click,
+            </if>
+            <if test="cover != null">
+                cover,
+            </if>
+            <if test="type != null">
+                `type`,
+            </if>
+            <if test="createTime != null">
+                create_time,
+            </if>
+            <if test="updateTime != null">
+                update_time,
+            </if>
+            <if test="delTag != null">
+                del_tag,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            #{id,jdbcType=VARCHAR},
+            <if test="url != null">
+                #{url,jdbcType=VARCHAR},
+            </if>
+            <if test="title != null">
+                #{title,jdbcType=VARCHAR},
+            </if>
+            <if test="describe != null">
+                #{describe,jdbcType=VARCHAR},
+            </if>
+            <if test="click != null">
+                #{click,jdbcType=VARCHAR},
+            </if>
+            <if test="cover != null">
+                #{cover,jdbcType=VARCHAR},
+            </if>
+            <if test="type != null">
+                #{type,jdbcType=VARCHAR},
+            </if>
+            <if test="createTime != null">
+                #{createTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="updateTime != null">
+                #{updateTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="delTag != null">
+                #{delTag,jdbcType=CHAR},
+            </if>
+        </trim>
+    </insert>
+    <update id="updateByPrimaryKeySelective" parameterType="com.code.codespace.pojo.po.Website">
+        update website
+        <set>
+            <if test="url != null">
+                url = #{url,jdbcType=VARCHAR},
+            </if>
+            <if test="title != null">
+                title = #{title,jdbcType=VARCHAR},
+            </if>
+            <if test="describe != null">
+                `describe` = #{describe,jdbcType=VARCHAR},
+            </if>
+            <if test="click != null">
+                click = #{click,jdbcType=VARCHAR},
+            </if>
+            <if test="cover != null">
+                cover = #{cover,jdbcType=VARCHAR},
+            </if>
+            <if test="type != null">
+                `type` = #{type,jdbcType=VARCHAR},
+            </if>
+            <if test="createTime != null">
+                create_time = #{createTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="updateTime != null">
+                update_time = #{updateTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="delTag != null">
+                del_tag = #{delTag,jdbcType=CHAR},
+            </if>
+        </set>
+        where id = #{id,jdbcType=VARCHAR}
+    </update>
+
+    <!--  查询数据库中是否存在相应的url-->
+    <select id="queryUrl" resultType="java.lang.Integer">
+        select count(1)
+        from website
+        where url = #{url}
+    </select>
+
+    <!--  通过网站类型获取网址-->
+    <select id="getWebsiteByType" resultType="com.code.codespace.pojo.po.Website">
+        select
+            id,url,title,`describe`,click,cover,type,create_time,update_time
+        from website
+        where type =#{type} and del_tag="0";
+    </select>
 
 
 </mapper>

@@ -1,20 +1,16 @@
 package com.code.codespace.controller;
 
+import com.baomidou.mybatisplus.core.toolkit.StringUtils;
 import com.code.codespace.constant.Result;
+import com.code.codespace.pojo.po.Website;
 import com.code.codespace.pojo.po.WebsiteType;
 import com.code.codespace.pojo.vo.WebsiteVo;
 import com.code.codespace.service.IWebsiteService;
-import io.swagger.annotations.Api;
-import io.swagger.annotations.ApiImplicitParam;
-import io.swagger.annotations.ApiImplicitParams;
-import io.swagger.annotations.ApiOperation;
+import io.swagger.annotations.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.transaction.annotation.Transactional;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PutMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -55,6 +51,17 @@ public class WebsiteController {
         return websiteService.addWebsite(websiteVo);
     }
 
+
+    @ApiOperation("传入网址类型获取网站列表")
+    @GetMapping("/getWebsiteByType/{type}")
+    public Result getWebsiteByType(@ApiParam("网址类型") @PathVariable("type") String type) {
+        if (StringUtils.isNotBlank(type)) {
+            List<Website> websiteList = websiteService.getWebsiteByType(type);
+            return Result.success(websiteList);
+        } else {
+            return Result.fail();
+        }
+    }
 
     @ApiOperation(value = "获取所有网站类型")
     @GetMapping("/getAllWebType")

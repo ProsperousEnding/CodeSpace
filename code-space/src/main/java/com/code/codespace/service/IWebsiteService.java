@@ -1,6 +1,7 @@
 package com.code.codespace.service;
 
 import com.code.codespace.constant.Result;
+import com.code.codespace.pojo.po.Website;
 import com.code.codespace.pojo.po.WebsiteType;
 import com.code.codespace.pojo.vo.WebsiteVo;
 
@@ -18,6 +19,13 @@ public interface IWebsiteService {
      */
     Result addWebsite(WebsiteVo websiteVo);
 
+    /**
+     * 通过网站类型获取网站
+     *
+     * @param type 网址类型
+     * @return
+     */
+    List<Website> getWebsiteByType(String type);
 
     /**
      * 获取所有网站类型

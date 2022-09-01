@@ -25,8 +25,8 @@ public interface WebsiteMapper {
     int queryUrl(@Param("url") String url);
 
     /**
-     * 查询所有网址类型
+     * 通过网址类型获取网址
      * @return
      */
-    List<WebsiteType> getAllWebType();
+    List<Website> getWebsiteByType(@Param("type") String type);
 }
