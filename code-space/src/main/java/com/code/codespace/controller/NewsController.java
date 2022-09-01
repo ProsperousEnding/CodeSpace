@@ -45,6 +45,7 @@ public class NewsController {
 
     /**
      * 获取新闻list
+     *
      * @return
      */
     @ApiOperation(value = "获取新闻列表（不分页）")
@@ -63,8 +64,7 @@ public class NewsController {
     @Scheduled(cron = "0 0/1 8-18 * * ?")
     @RequestMapping("/doTask")
     @Transactional(rollbackFor = Exception.class)
-    public void doTask() throws IOException {
-
+    public Result doTask() throws IOException {
         //获取网页url的Document并设置超时时间
         Document document = Jsoup.parse(new URL(SysCode.NEWS.NEWS_URL), SysCode.NEWS.TIMEOUT);
         //新闻list
@@ -72,19 +72,18 @@ public class NewsController {
         {
             //先清空表
             codeWebNewsService.deleteNewsTable();
-         addNewsList(document,newsList,SysCode.NEWS.HOT_NEWS.WEI_BO,SysCode.NEWS.HOT_NEWS.WEI_BO_ID);
-         addNewsList(document,newsList,SysCode.NEWS.HOT_NEWS.ZHI_HU,SysCode.NEWS.HOT_NEWS.ZHI_HU_ID);
-         addNewsList(document,newsList,SysCode.NEWS.HOT_NEWS.WEI_XIN,SysCode.NEWS.HOT_NEWS.WEI_XIN_ID);
-         addNewsList(document,newsList,SysCode.NEWS.HOT_NEWS.BAI_DU,SysCode.NEWS.HOT_NEWS.BAI_DU_ID);
-         addNewsList(document,newsList,SysCode.NEWS.HOT_NEWS.KE_36,SysCode.NEWS.HOT_NEWS.KE_36_ID);
-         addNewsList(document,newsList,SysCode.NEWS.HOT_NEWS.SHAO_SHU_PAI,SysCode.NEWS.HOT_NEWS.SHAO_SHU_PAI_ID);
-         addNewsList(document,newsList,SysCode.NEWS.HOT_NEWS.HU_XIU,SysCode.NEWS.HOT_NEWS.HU_XIU_ID);
-         addNewsList(document,newsList,SysCode.NEWS.HOT_NEWS.IT,SysCode.NEWS.HOT_NEWS.IT_ID);
-         codeWebNewsService.saveNewsList(newsList);
-
+            addNewsList(document, newsList, SysCode.NEWS.HOT_NEWS.WEI_BO, SysCode.NEWS.HOT_NEWS.WEI_BO_ID);
+            addNewsList(document, newsList, SysCode.NEWS.HOT_NEWS.ZHI_HU, SysCode.NEWS.HOT_NEWS.ZHI_HU_ID);
+            addNewsList(document, newsList, SysCode.NEWS.HOT_NEWS.WEI_XIN, SysCode.NEWS.HOT_NEWS.WEI_XIN_ID);
+            addNewsList(document, newsList, SysCode.NEWS.HOT_NEWS.BAI_DU, SysCode.NEWS.HOT_NEWS.BAI_DU_ID);
+            addNewsList(document, newsList, SysCode.NEWS.HOT_NEWS.KE_36, SysCode.NEWS.HOT_NEWS.KE_36_ID);
+            addNewsList(document, newsList, SysCode.NEWS.HOT_NEWS.SHAO_SHU_PAI, SysCode.NEWS.HOT_NEWS.SHAO_SHU_PAI_ID);
+            addNewsList(document, newsList, SysCode.NEWS.HOT_NEWS.HU_XIU, SysCode.NEWS.HOT_NEWS.HU_XIU_ID);
+            addNewsList(document, newsList, SysCode.NEWS.HOT_NEWS.IT, SysCode.NEWS.HOT_NEWS.IT_ID);
+            codeWebNewsService.saveNewsList(newsList);
+            return Result.success();
         }
-
-  //{
+        //{
         //    // 豆瓣电影Top250
         //    String url = "https://movie.douban.com/top250";
         //
@@ -132,30 +131,30 @@ public class NewsController {
         //}
     }
 
-
     /**
-     * 添加热榜到list
+     * 添加热榜到list,用于批量存储
+     *
      * @param document
      * @param newsList
      * @param hotCoding
      * @param hotTag
      */
-    private void addNewsList(Document document,List<CodeWebNews> newsList,String hotCoding,String hotTag) {
+    private void addNewsList(Document document, List<CodeWebNews> newsList, String hotCoding, String hotTag) {
         Element contents = document.getElementById(hotTag);
         Elements div = contents.getElementsByClass(SysCode.NEWS.NEWS_BASE.ELEMENT_CLASS);
         Elements a = div.first().getElementsByTag(SysCode.NEWS.NEWS_BASE.ELEMENT_TAG);
         for (Element href : a
         ) {
-        String hrefUrl = href.attr(SysCode.NEWS.NEWS_BASE.ATTR_HREF);
-        String title = href.getElementsByClass(SysCode.NEWS.NEWS_BASE.CLASS_NAME_T).text();
-        String likes = href.getElementsByClass(SysCode.NEWS.NEWS_BASE.CLASS_NAME_E).text();
-        CodeWebNews codeWebNews = new CodeWebNews();
-        codeWebNews.setNewsId(String.valueOf(UUID.randomUUID()));
-        codeWebNews.setNewsTitle(title);
-        codeWebNews.setNewsUrl(hrefUrl);
-        codeWebNews.setNewsLikes(likes);
-        codeWebNews.setNewsTypeId(hotCoding);
-        newsList.add(codeWebNews);
+            String hrefUrl = href.attr(SysCode.NEWS.NEWS_BASE.ATTR_HREF);
+            String title = href.getElementsByClass(SysCode.NEWS.NEWS_BASE.CLASS_NAME_T).text();
+            String likes = href.getElementsByClass(SysCode.NEWS.NEWS_BASE.CLASS_NAME_E).text();
+            CodeWebNews codeWebNews = new CodeWebNews();
+            codeWebNews.setNewsId(String.valueOf(UUID.randomUUID()));
+            codeWebNews.setNewsTitle(title);
+            codeWebNews.setNewsUrl(hrefUrl);
+            codeWebNews.setNewsLikes(likes);
+            codeWebNews.setNewsTypeId(hotCoding);
+            newsList.add(codeWebNews);
         }
     }
 }

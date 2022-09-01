@@ -15,6 +15,7 @@ import java.util.Date;
 @ApiModel(value="com.code.codespace.pojo.po.Website")
 @Data
 public class Website implements Serializable {
+
     private String id;
 
     /**

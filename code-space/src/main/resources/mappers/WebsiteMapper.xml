@@ -25,23 +25,11 @@
     from website website
     where website.id = #{id,jdbcType=VARCHAR}
   </select>
-  <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
-    delete from website
-    where id = #{id,jdbcType=VARCHAR}
-  </delete>
-  <insert id="insert" keyColumn="id" keyProperty="id" parameterType="com.code.codespace.pojo.po.Website" useGeneratedKeys="true">
-    insert into website (url, title, `describe`, 
-      click, cover, `type`, 
-      create_time, update_time, del_tag
-      )
-    values (#{url,jdbcType=VARCHAR}, #{title,jdbcType=VARCHAR}, #{describe,jdbcType=VARCHAR}, 
-      #{click,jdbcType=VARCHAR}, #{cover,jdbcType=VARCHAR}, #{type,jdbcType=VARCHAR}, 
-      #{createTime,jdbcType=TIMESTAMP}, #{updateTime,jdbcType=TIMESTAMP}, #{delTag,jdbcType=CHAR}
-      )
-  </insert>
+
   <insert id="insertSelective" keyColumn="id" keyProperty="id" parameterType="com.code.codespace.pojo.po.Website" useGeneratedKeys="true">
     insert into website
     <trim prefix="(" suffix=")" suffixOverrides=",">
+        id,
       <if test="url != null">
         url,
       </if>
@@ -71,6 +59,7 @@
       </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides=",">
+        #{id,jdbcType=VARCHAR},
       <if test="url != null">
         #{url,jdbcType=VARCHAR},
       </if>
@@ -133,17 +122,10 @@
     </set>
     where id = #{id,jdbcType=VARCHAR}
   </update>
-  <update id="updateByPrimaryKey" parameterType="com.code.codespace.pojo.po.Website">
-    update website
-    set url = #{url,jdbcType=VARCHAR},
-      title = #{title,jdbcType=VARCHAR},
-      `describe` = #{describe,jdbcType=VARCHAR},
-      click = #{click,jdbcType=VARCHAR},
-      cover = #{cover,jdbcType=VARCHAR},
-      `type` = #{type,jdbcType=VARCHAR},
-      create_time = #{createTime,jdbcType=TIMESTAMP},
-      update_time = #{updateTime,jdbcType=TIMESTAMP},
-      del_tag = #{delTag,jdbcType=CHAR}
-    where id = #{id,jdbcType=VARCHAR}
-  </update>
+<!--  查询数据库中是否存在相应的url-->
+  <select id="queryUrl" resultType="java.lang.Integer">
+    select count(1) from website where url=#{url}
+  </select>
+
+
 </mapper>

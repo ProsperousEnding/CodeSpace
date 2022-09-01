@@ -5,6 +5,9 @@ import com.code.codespace.pojo.po.CodeWebNews;
 
 import java.util.List;
 
+/**
+ * 新闻操作Service
+ */
 public interface ICodeWebNewsService {
 
     /**

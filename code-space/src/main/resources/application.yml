@@ -1,5 +1,7 @@
 server:
   port: 8088
+  servlet:
+    context-path: /space
 
 spring:
   datasource:
@@ -12,10 +14,6 @@ spring:
       #springboot 集成Swagger2报错原因：
       #这是因为Springfox使用的路径匹配是基于AntPathMatcher的，而Spring Boot 2.6.X使用的是PathPatternMatcher。
       matching-strategy: ant_path_matcher
-
-#mvc:
-#pathmatch:
-#matching-strategy: ANT_PATH_MATCHER
 
 mybatis-plus:
   configuration:
