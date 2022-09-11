@@ -51,6 +51,18 @@ public class WebsiteController {
         return websiteService.addWebsite(websiteVo);
     }
 
+    /**
+     * 获取点击排名前十的网站
+     *
+     * @return
+     */
+    @ApiOperation("获取点赞数前十的网站")
+    @GetMapping("/getTop10Website")
+    public Result getTop10Website() {
+        List<Website> websiteList = websiteService.getTop10Website();
+        return Result.success(websiteList);
+    }
+
 
     @ApiOperation("传入网址类型获取网站列表")
     @GetMapping("/getWebsiteByType/{type}")

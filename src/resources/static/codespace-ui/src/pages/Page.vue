@@ -63,6 +63,9 @@ import {
 } from "@vicons/ionicons5";
 // 获取新闻api
 import { getNewsList } from "../apis/news.js";
+//获取站长推荐网址
+import {getTop10Website} from "../apis/website.js"
+
 import infiniteSlideBar from "../utils/vue-infinite-slide-bar.vue";
 let list = ref([
   {
@@ -85,7 +88,6 @@ let zhihu = ref([]);
 let baidu = ref([]);
 // 获取新闻列表
 getNewsList().then((res) => {
-  console.log(res);
   res.data.forEach((e) => {
     if (e.newsTypeId == "1") {
       weibo.value.push(e);
@@ -111,6 +113,15 @@ function redirectUrl(e) {
     e = e.substr(0, 7).toLowerCase() == "http://" ? e : "http://" + e;
   window.open(e, "_blank");
 }
+
+//获取点击前十的站长推荐网站
+// 获取新闻列表
+let Top10Website = ref([]);
+getTop10Website().then((res) => {
+  Top10Website.value=res.data
+  console.log(Top10Website)
+  return Top10Website;
+});
 </script>
 <template>
   <div style="height: 1500px">
@@ -118,7 +129,7 @@ function redirectUrl(e) {
       <!-- 这是幻灯片 -->
       <n-carousel effect="card" prev-slide-style="transform: translateX(-150%) translateZ(-800px);"
         next-slide-style="transform: translateX(50%) translateZ(-800px);" style="height: 200px" :show-dots="true"
-        draggable trigger="hover" :effect="fade" autoplay>
+        draggable trigger="hover" autoplay>
         <n-carousel-item :style="{ width: '60%' }">
           <img class="carousel-img" src="https://naive-ui.oss-cn-beijing.aliyuncs.com/carousel-img/carousel1.jpeg" />
         </n-carousel-item>
@@ -240,13 +251,15 @@ function redirectUrl(e) {
 <h2 style="display:flex;"><n-icon size="30" color="filter: invert(50%)" :component=" Contract"   style="display:inline"/><strong  style="display:inline">站长推荐</strong></h2>
   <!-- 最新推荐网址 -->
     <div>   
-      <n-space size="large" style="width: 100%;">
-        <div style="margin-left: 10% ;padding-bottom:10px;">
-          <a @click="redirectUrl(listurl)">
+      <n-space size="large" style="width: 100%;"  >
+<div  v-for="(el, index) in Top10Website" padding="10px">
+        <div style="margin-left: 10% ; padding-bottom:10px;">
+          <a @click="redirectUrl(el.url)">
             <n-card hoverable style="width: 200px">
               <div>
-                <img src="https://07akioni.oss-cn-beijing.aliyuncs.com/07akioni.jpeg" style="
+                <img :src="el.cover" style="
                     height: 40px;
+                    width: 40px;
                     display: inline-block;
                     vertical-align: middle;
                     border-radius: 20%;
@@ -261,10 +274,10 @@ function redirectUrl(e) {
                         text-overflow: ellipsis;
                         white-space: nowrap;
                       ">
-                      <strong>这是一个标题发射点发生顺丰到付撒旦</strong>
+                      <strong>{{el.title}}</strong>
                     </div>
                   </template>
-                  <span>这是一个标题发射点发生顺丰到付撒旦 </span>
+                  <span>{{el.title}} </span>
                 </n-popover>
               </div>
               <n-popover :overlap="overlap" placement="bottom" trigger="hover" :keep-alive-on-hover="false">
@@ -276,359 +289,17 @@ function redirectUrl(e) {
                       /* color:#145ccd */
                       color: #a2a2a2;
                     ">
-                    只要是看到天fasdfassssssssssssssssssss哈哈哈哈啊啊哈哈哈哈
+                    {{el.describe}}
                   </div>
                 </template>
-                <span>只要是看到天fasdfassssssssssssssssssss哈哈哈哈啊啊哈哈哈哈</span>
+                <span><div style="width:300px;height:100%; word-wrap: break-word">{{el.describe}}</div></span>
               </n-popover>
             </n-card>
           </a>
         </div>
- <div style="margin-left: 10% ;padding-bottom:10px;">
-          <a @click="redirectUrl(listurl)">
-            <n-card hoverable style="width: 200px">
-              <div>
-                <img src="https://07akioni.oss-cn-beijing.aliyuncs.com/07akioni.jpeg" style="
-                    height: 40px;
-                    display: inline-block;
-                    vertical-align: middle;
-                    border-radius: 20%;
-                  " />
-                <n-popover trigger="hover" :keep-alive-on-hover="false">
-                  <template #trigger>
-                    <div style="
-                        display: inline-block;
-                        margin-left: 5px;
-                        max-width: 100px;
-                        overflow: hidden;
-                        text-overflow: ellipsis;
-                        white-space: nowrap;
-                      ">
-                      <strong>这是一个标题发射点发生顺丰到付撒旦</strong>
-                    </div>
-                  </template>
-                  <span>这是一个标题发射点发生顺丰到付撒旦 </span>
-                </n-popover>
-              </div>
-              <n-popover :overlap="overlap" placement="bottom" trigger="hover" :keep-alive-on-hover="false">
-                <template #trigger>
-                  <div style="
-                      overflow: hidden;
-                      text-overflow: ellipsis;
-                      white-space: nowrap;
-                      /* color:#145ccd */
-                      color: #a2a2a2;
-                    ">
-                    只要是看到天fasdfassssssssssssssssssss哈哈哈哈啊啊哈哈哈哈
-                  </div>
-                </template>
-                <span>只要是看到天fasdfassssssssssssssssssss哈哈哈哈啊啊哈哈哈哈</span>
-              </n-popover>
-            </n-card>
-          </a>
-        </div>
- <div style="margin-left: 10% ;padding-bottom:10px;">
-          <a @click="redirectUrl(listurl)">
-            <n-card hoverable style="width: 200px">
-              <div>
-                <img src="https://07akioni.oss-cn-beijing.aliyuncs.com/07akioni.jpeg" style="
-                    height: 40px;
-                    display: inline-block;
-                    vertical-align: middle;
-                    border-radius: 20%;
-                  " />
-                <n-popover trigger="hover" :keep-alive-on-hover="false">
-                  <template #trigger>
-                    <div style="
-                        display: inline-block;
-                        margin-left: 5px;
-                        max-width: 100px;
-                        overflow: hidden;
-                        text-overflow: ellipsis;
-                        white-space: nowrap;
-                      ">
-                      <strong>这是一个标题发射点发生顺丰到付撒旦</strong>
-                    </div>
-                  </template>
-                  <span>这是一个标题发射点发生顺丰到付撒旦 </span>
-                </n-popover>
-              </div>
-              <n-popover :overlap="overlap" placement="bottom" trigger="hover" :keep-alive-on-hover="false">
-                <template #trigger>
-                  <div style="
-                      overflow: hidden;
-                      text-overflow: ellipsis;
-                      white-space: nowrap;
-                      /* color:#145ccd */
-                      color: #a2a2a2;
-                    ">
-                    只要是看到天fasdfassssssssssssssssssss哈哈哈哈啊啊哈哈哈哈
-                  </div>
-                </template>
-                <span>只要是看到天fasdfassssssssssssssssssss哈哈哈哈啊啊哈哈哈哈</span>
-              </n-popover>
-            </n-card>
-          </a>
-        </div>
- <div style="margin-left: 10% ;padding-bottom:10px;">
-          <a @click="redirectUrl(listurl)">
-            <n-card hoverable style="width: 200px">
-              <div>
-                <img src="https://07akioni.oss-cn-beijing.aliyuncs.com/07akioni.jpeg" style="
-                    height: 40px;
-                    display: inline-block;
-                    vertical-align: middle;
-                    border-radius: 20%;
-                  " />
-                <n-popover trigger="hover" :keep-alive-on-hover="false">
-                  <template #trigger>
-                    <div style="
-                        display: inline-block;
-                        margin-left: 5px;
-                        max-width: 100px;
-                        overflow: hidden;
-                        text-overflow: ellipsis;
-                        white-space: nowrap;
-                      ">
-                      <strong>这是一个标题发射点发生顺丰到付撒旦</strong>
-                    </div>
-                  </template>
-                  <span>这是一个标题发射点发生顺丰到付撒旦 </span>
-                </n-popover>
-              </div>
-              <n-popover :overlap="overlap" placement="bottom" trigger="hover" :keep-alive-on-hover="false">
-                <template #trigger>
-                  <div style="
-                      overflow: hidden;
-                      text-overflow: ellipsis;
-                      white-space: nowrap;
-                      /* color:#145ccd */
-                      color: #a2a2a2;
-                    ">
-                    只要是看到天fasdfassssssssssssssssssss哈哈哈哈啊啊哈哈哈哈
-                  </div>
-                </template>
-                <span>只要是看到天fasdfassssssssssssssssssss哈哈哈哈啊啊哈哈哈哈</span>
-              </n-popover>
-            </n-card>
-          </a>
-        </div>
- <div style="margin-left: 10% ;padding-bottom:10px;">
-          <a @click="redirectUrl(listurl)">
-            <n-card hoverable style="width: 200px">
-              <div>
-                <img src="https://07akioni.oss-cn-beijing.aliyuncs.com/07akioni.jpeg" style="
-                    height: 40px;
-                    display: inline-block;
-                    vertical-align: middle;
-                    border-radius: 20%;
-                  " />
-                <n-popover trigger="hover" :keep-alive-on-hover="false">
-                  <template #trigger>
-                    <div style="
-                        display: inline-block;
-                        margin-left: 5px;
-                        max-width: 100px;
-                        overflow: hidden;
-                        text-overflow: ellipsis;
-                        white-space: nowrap;
-                      ">
-                      <strong>这是一个标题发射点发生顺丰到付撒旦</strong>
-                    </div>
-                  </template>
-                  <span>这是一个标题发射点发生顺丰到付撒旦 </span>
-                </n-popover>
-              </div>
-              <n-popover :overlap="overlap" placement="bottom" trigger="hover" :keep-alive-on-hover="false">
-                <template #trigger>
-                  <div style="
-                      overflow: hidden;
-                      text-overflow: ellipsis;
-                      white-space: nowrap;
-                      /* color:#145ccd */
-                      color: #a2a2a2;
-                    ">
-                    只要是看到天fasdfassssssssssssssssssss哈哈哈哈啊啊哈哈哈哈
-                  </div>
-                </template>
-                <span>只要是看到天fasdfassssssssssssssssssss哈哈哈哈啊啊哈哈哈哈</span>
-              </n-popover>
-            </n-card>
-          </a>
-        </div>
- <div style="margin-left: 10% ;padding-bottom:10px;">
-          <a @click="redirectUrl(listurl)">
-            <n-card hoverable style="width: 200px">
-              <div>
-                <img src="https://07akioni.oss-cn-beijing.aliyuncs.com/07akioni.jpeg" style="
-                    height: 40px;
-                    display: inline-block;
-                    vertical-align: middle;
-                    border-radius: 20%;
-                  " />
-                <n-popover trigger="hover" :keep-alive-on-hover="false">
-                  <template #trigger>
-                    <div style="
-                        display: inline-block;
-                        margin-left: 5px;
-                        max-width: 100px;
-                        overflow: hidden;
-                        text-overflow: ellipsis;
-                        white-space: nowrap;
-                      ">
-                      <strong>这是一个标题发射点发生顺丰到付撒旦</strong>
-                    </div>
-                  </template>
-                  <span>这是一个标题发射点发生顺丰到付撒旦 </span>
-                </n-popover>
-              </div>
-              <n-popover :overlap="overlap" placement="bottom" trigger="hover" :keep-alive-on-hover="false">
-                <template #trigger>
-                  <div style="
-                      overflow: hidden;
-                      text-overflow: ellipsis;
-                      white-space: nowrap;
-                      /* color:#145ccd */
-                      color: #a2a2a2;
-                    ">
-                    只要是看到天fasdfassssssssssssssssssss哈哈哈哈啊啊哈哈哈哈
-                  </div>
-                </template>
-                <span>只要是看到天fasdfassssssssssssssssssss哈哈哈哈啊啊哈哈哈哈</span>
-              </n-popover>
-            </n-card>
-          </a>
-        </div>
- <div style="margin-left: 10% ;padding-bottom:10px;">
-          <a @click="redirectUrl(listurl)">
-            <n-card hoverable style="width: 200px">
-              <div>
-                <img src="https://07akioni.oss-cn-beijing.aliyuncs.com/07akioni.jpeg" style="
-                    height: 40px;
-                    display: inline-block;
-                    vertical-align: middle;
-                    border-radius: 20%;
-                  " />
-                <n-popover trigger="hover" :keep-alive-on-hover="false">
-                  <template #trigger>
-                    <div style="
-                        display: inline-block;
-                        margin-left: 5px;
-                        max-width: 100px;
-                        overflow: hidden;
-                        text-overflow: ellipsis;
-                        white-space: nowrap;
-                      ">
-                      <strong>这是一个标题发射点发生顺丰到付撒旦</strong>
-                    </div>
-                  </template>
-                  <span>这是一个标题发射点发生顺丰到付撒旦 </span>
-                </n-popover>
-              </div>
-              <n-popover :overlap="overlap" placement="bottom" trigger="hover" :keep-alive-on-hover="false">
-                <template #trigger>
-                  <div style="
-                      overflow: hidden;
-                      text-overflow: ellipsis;
-                      white-space: nowrap;
-                      /* color:#145ccd */
-                      color: #a2a2a2;
-                    ">
-                    只要是看到天fasdfassssssssssssssssssss哈哈哈哈啊啊哈哈哈哈
-                  </div>
-                </template>
-                <span>只要是看到天fasdfassssssssssssssssssss哈哈哈哈啊啊哈哈哈哈</span>
-              </n-popover>
-            </n-card>
-          </a>
-        </div>
- <div style="margin-left: 10% ;padding-bottom:10px;">
-          <a @click="redirectUrl(listurl)">
-            <n-card hoverable style="width: 200px">
-              <div>
-                <img src="https://07akioni.oss-cn-beijing.aliyuncs.com/07akioni.jpeg" style="
-                    height: 40px;
-                    display: inline-block;
-                    vertical-align: middle;
-                    border-radius: 20%;
-                  " />
-                <n-popover trigger="hover" :keep-alive-on-hover="false">
-                  <template #trigger>
-                    <div style="
-                        display: inline-block;
-                        margin-left: 5px;
-                        max-width: 100px;
-                        overflow: hidden;
-                        text-overflow: ellipsis;
-                        white-space: nowrap;
-                      ">
-                      <strong>这是一个标题发射点发生顺丰到付撒旦</strong>
-                    </div>
-                  </template>
-                  <span>这是一个标题发射点发生顺丰到付撒旦 </span>
-                </n-popover>
-              </div>
-              <n-popover :overlap="overlap" placement="bottom" trigger="hover" :keep-alive-on-hover="false">
-                <template #trigger>
-                  <div style="
-                      overflow: hidden;
-                      text-overflow: ellipsis;
-                      white-space: nowrap;
-                      /* color:#145ccd */
-                      color: #a2a2a2;
-                    ">
-                    只要是看到天fasdfassssssssssssssssssss哈哈哈哈啊啊哈哈哈哈
-                  </div>
-                </template>
-                <span>只要是看到天fasdfassssssssssssssssssss哈哈哈哈啊啊哈哈哈哈</span>
-              </n-popover>
-            </n-card>
-          </a>
-        </div>
- <div style="margin-left: 10% ;padding-bottom:10px;">
-          <a @click="redirectUrl(listurl)">
-            <n-card hoverable style="width: 200px">
-              <div>
-                <img src="https://07akioni.oss-cn-beijing.aliyuncs.com/07akioni.jpeg" style="
-                    height: 40px;
-                    display: inline-block;
-                    vertical-align: middle;
-                    border-radius: 20%;
-                  " />
-                <n-popover trigger="hover" :keep-alive-on-hover="false">
-                  <template #trigger>
-                    <div style="
-                        display: inline-block;
-                        margin-left: 5px;
-                        max-width: 100px;
-                        overflow: hidden;
-                        text-overflow: ellipsis;
-                        white-space: nowrap;
-                      ">
-                      <strong>这是一个标题发射点发生顺丰到付撒旦</strong>
-                    </div>
-                  </template>
-                  <span>这是一个标题发射点发生顺丰到付撒旦 </span>
-                </n-popover>
-              </div>
-              <n-popover :overlap="overlap" placement="bottom" trigger="hover" :keep-alive-on-hover="false">
-                <template #trigger>
-                  <div style="
-                      overflow: hidden;
-                      text-overflow: ellipsis;
-                      white-space: nowrap;
-                      /* color:#145ccd */
-                      color: #a2a2a2;
-                    ">
-                    只要是看到天fasdfassssssssssssssssssss哈哈哈哈啊啊哈哈哈哈
-                  </div>
-                </template>
-                <span>只要是看到天fasdfassssssssssssssssssss哈哈哈哈啊啊哈哈哈哈</span>
-              </n-popover>
-            </n-card>
-          </a>
-        </div>
+      </div>
 
+ 
         
       </n-space>
     </div>

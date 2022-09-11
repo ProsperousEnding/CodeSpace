@@ -16,6 +16,7 @@ import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.scheduling.annotation.Async;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
@@ -50,6 +51,7 @@ public class NewsController {
      */
     @ApiOperation(value = "获取新闻列表（不分页）")
     @RequestMapping("/getNewsList")
+    @Async
     public Result<List> getNewsList() {
         return Result.success(JSON.toJSON(codeWebNewsService.getNewsList()));
     }

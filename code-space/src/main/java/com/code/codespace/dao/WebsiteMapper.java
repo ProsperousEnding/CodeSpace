@@ -19,13 +19,22 @@ public interface WebsiteMapper {
 
     /**
      * 查询数据库中存在的url
+     *
      * @param url
      * @return
      */
     int queryUrl(@Param("url") String url);
 
     /**
+     * 获取排名前十的网站
+     *
+     * @return
+     */
+    List<Website> getTop10Website();
+
+    /**
      * 通过网址类型获取网址
+     *
      * @return
      */
     List<Website> getWebsiteByType(@Param("type") String type);

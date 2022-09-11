@@ -134,12 +134,40 @@
         where url = #{url}
     </select>
 
+    <!--    获取排名前十的网站-->
+    <select id="getTop10Website" resultType="com.code.codespace.pojo.po.Website">
+        select
+            id,
+            url,
+            title,
+            `describe`,
+            click,
+            cover,
+            type,
+            create_time,
+            update_time
+        from
+            website
+        order by
+            click desc
+            limit 0,10
+    </select>
+
     <!--  通过网站类型获取网址-->
     <select id="getWebsiteByType" resultType="com.code.codespace.pojo.po.Website">
-        select
-            id,url,title,`describe`,click,cover,type,create_time,update_time
+        select id,
+               url,
+               title,
+               `describe`,
+               click,
+               cover,
+               type,
+               create_time,
+               update_time
         from website
-        where type =#{type} and del_tag="0";
+        where type = #{type}
+          and del_tag = "0"
+        order by update_time, id
     </select>
 
 

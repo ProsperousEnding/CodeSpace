@@ -20,6 +20,13 @@ public interface IWebsiteService {
     Result addWebsite(WebsiteVo websiteVo);
 
     /**
+     * 获取点赞数前十的网站
+     *
+     * @return
+     */
+    List<Website> getTop10Website();
+
+    /**
      * 通过网站类型获取网站
      *
      * @param type 网址类型
@@ -33,4 +40,5 @@ public interface IWebsiteService {
      * @return
      */
     List<WebsiteType> getAllWebType();
+
 }
