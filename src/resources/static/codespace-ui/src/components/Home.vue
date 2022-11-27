@@ -161,7 +161,7 @@ let live2dStyle=ref('position: fixed; bottom: 0; right: 0;')
 <template>
   <n-config-provider :theme="theme">
     <n-space vertical size="large">
-      <n-layout>
+      <n-layout >
         <n-layout-header
           :inverted="inverted"
           style="display: flex; align-items: center; height: 60px"

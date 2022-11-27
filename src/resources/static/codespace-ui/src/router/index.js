@@ -1,9 +1,26 @@
 import { createRouter, createWebHashHistory } from "vue-router"
-
-const routes=[{
+import CodeHeader from '../components/CodeHeader.vue'
+import Main from '../components/Main.vue'
+const routes=[
+    {
     path:'/',
-    redirect: '/Home/page',
+    redirect: '/Main',
 },
+{
+    path:'/Main',
+    component:()=> import('../components/Main.vue'),
+    children:[ {
+      path: 'resouce',
+      name:'Resource',
+      component:  () => import('../pages/Resource.vue'), 
+    },
+  ]
+},
+{
+    path:'/CodeHeader',
+    component:()=> import('../components/CodeHeader.vue'),
+},
+
     {
         path:'/Home',
         component:()=> import('../components/Home.vue'),
@@ -16,7 +33,14 @@ const routes=[{
             path: 'book',
             name: 'Book',
             component: () => import('../pages/Book.vue'),
-          }]
+          },
+          {
+            path: 'web',
+            name: 'Web',
+            component: () => import('../pages/Web.vue'),
+          },
+        
+        ]
     },
     // {
     //     path:'/page',

@@ -61,6 +61,8 @@ import {
   ArrowForward,
   NavigateOutline,
 } from "@vicons/ionicons5";
+
+import "hover.css";
 // 获取新闻api
 import { getNewsList } from "../apis/news.js";
 //获取站长推荐网址
@@ -177,7 +179,7 @@ getTop10Website().then((res) => {
               <n-tooltip :show-arrow="false" trigger="hover" style="background-color: currentColor">
                 <template #trigger>
                   <n-button text style="font-size: 24px" @click="getNews">
-                    <n-icon>
+                    <n-icon class="hvr-grow">
                       <navigate-outline />
                     </n-icon>
                   </n-button>
@@ -191,7 +193,7 @@ getTop10Website().then((res) => {
                 style="padding-bottom: 15px">
                 <!-- 文本省略 -->
                 <n-ellipsis style="max-width: 65%">
-                  <a @click="jump(el.newsUrl)" style="text-decoration: none; color: currentColor">
+                  <a  class="hvr-backward"  @click="jump(el.newsUrl)" style="text-decoration: none; color: currentColor">
                     {{ index + 1 }} {{ el.newsTitle }}
                   </a>
                   <template #tooltip :delay="500">
@@ -206,7 +208,7 @@ getTop10Website().then((res) => {
                 style="padding-bottom: 15px">
                 <!-- 文本省略 -->
                 <n-ellipsis style="max-width: 65%">
-                  <a @click="jump(el.newsUrl)" style="text-decoration: none; color: currentColor">
+                  <a class="hvr-backward" @click="jump(el.newsUrl)" style="text-decoration: none; color: currentColor ">
                     {{ index + 1 }} {{ el.newsTitle }}
                   </a>
                   <template #tooltip :delay="500">
@@ -221,7 +223,7 @@ getTop10Website().then((res) => {
                 style="padding-bottom: 15px">
                 <!-- 文本省略 -->
                 <n-ellipsis style="max-width: 65%">
-                  <a @click="jump(el.newsUrl)" style="text-decoration: none; color: currentColor">
+                  <a  class="hvr-backward"  @click="jump(el.newsUrl)" style="text-decoration: none; color: currentColor">
                     {{ index + 1 }} {{ el.newsTitle }}
                   </a>
                   <template #tooltip :delay="500">
@@ -253,13 +255,14 @@ getTop10Website().then((res) => {
     <div>   
       <n-space size="large" style="width: 100%;"  >
 <div  v-for="(el, index) in Top10Website" padding="10px">
-        <div style="margin-left: 10% ; padding-bottom:10px;">
+        <div style="margin-left: 10% ; padding-bottom:10px;" 
+                       class="hvr-bob hvr-shrink ">
           <a @click="redirectUrl(el.url)">
             <n-card hoverable style="width: 200px">
-              <div>
-                <img :src="el.cover" style="
-                    height: 40px;
-                    width: 40px;
+              <div >
+                <img :src="el.cover" class="hvr-backward" style="
+                    height: 30px;
+                    width: 30px;
                     display: inline-block;
                     vertical-align: middle;
                     border-radius: 20%;
@@ -268,19 +271,19 @@ getTop10Website().then((res) => {
                   <template #trigger>
                     <div style="
                         display: inline-block;
-                        margin-left: 5px;
+                        margin-left: 10px;
                         max-width: 100px;
                         overflow: hidden;
                         text-overflow: ellipsis;
                         white-space: nowrap;
                       ">
-                      <strong>{{el.title}}</strong>
+                      <strong class="hvr-skew-forward">{{el.title}}</strong>
                     </div>
                   </template>
                   <span>{{el.title}} </span>
                 </n-popover>
               </div>
-              <n-popover :overlap="overlap" placement="bottom" trigger="hover" :keep-alive-on-hover="false">
+              <n-popover :overlap="overlap" placement="bottom" trigger="hover" :keep-alive-on-hover="false" >
                 <template #trigger>
                   <div style="
                       overflow: hidden;
@@ -309,7 +312,10 @@ getTop10Website().then((res) => {
 
   </div>
 </template>
-<style scoped>
+<style >
+/* 悬浮动画css */
+@import "hover.css";
+
 .carousel-img {
   margin: 0 auto;
   width: 100%;

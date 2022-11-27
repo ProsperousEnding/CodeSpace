@@ -10,6 +10,7 @@
   },
   "dependencies": {
     "axios": "^0.27.2",
+    "hover.css": "^2.3.2",
     "qs": "^6.11.0",
     "vue": "^3.2.37",
     "vue-infinite-slide-bar": "^1.1.1",
